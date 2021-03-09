@@ -1,0 +1,8 @@
+prefix=/home/dennis/ROS/ROS_CAR/devel
+
+Name: turtle_square
+Description: Description of turtle_square
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
