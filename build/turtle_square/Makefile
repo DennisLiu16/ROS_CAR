@@ -91,6 +91,17 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # Special rule for the target list_install_components
 list_install_components:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
@@ -123,17 +134,6 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -378,6 +378,21 @@ roscpp_generate_messages_nodejs/fast:
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 # Convenience name for target.
+turtle_square/CMakeFiles/turtle_square_node.dir/rule:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 turtle_square/CMakeFiles/turtle_square_node.dir/rule
+.PHONY : turtle_square/CMakeFiles/turtle_square_node.dir/rule
+
+# Convenience name for target.
+turtle_square_node: turtle_square/CMakeFiles/turtle_square_node.dir/rule
+
+.PHONY : turtle_square_node
+
+# fast build rule for target.
+turtle_square_node/fast:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtle_square/CMakeFiles/turtle_square_node.dir/build.make turtle_square/CMakeFiles/turtle_square_node.dir/build
+.PHONY : turtle_square_node/fast
+
+# Convenience name for target.
 turtle_square/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 turtle_square/CMakeFiles/std_msgs_generate_messages_py.dir/rule
 .PHONY : turtle_square/CMakeFiles/std_msgs_generate_messages_py.dir/rule
@@ -392,6 +407,33 @@ std_msgs_generate_messages_py/fast:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtle_square/CMakeFiles/std_msgs_generate_messages_py.dir/build.make turtle_square/CMakeFiles/std_msgs_generate_messages_py.dir/build
 .PHONY : std_msgs_generate_messages_py/fast
 
+src/turtle_square_node.o: src/turtle_square_node.cpp.o
+
+.PHONY : src/turtle_square_node.o
+
+# target to build an object file
+src/turtle_square_node.cpp.o:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtle_square/CMakeFiles/turtle_square_node.dir/build.make turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o
+.PHONY : src/turtle_square_node.cpp.o
+
+src/turtle_square_node.i: src/turtle_square_node.cpp.i
+
+.PHONY : src/turtle_square_node.i
+
+# target to preprocess a source file
+src/turtle_square_node.cpp.i:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtle_square/CMakeFiles/turtle_square_node.dir/build.make turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.i
+.PHONY : src/turtle_square_node.cpp.i
+
+src/turtle_square_node.s: src/turtle_square_node.cpp.s
+
+.PHONY : src/turtle_square_node.s
+
+# target to generate assembly for a file
+src/turtle_square_node.cpp.s:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtle_square/CMakeFiles/turtle_square_node.dir/build.make turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.s
+.PHONY : src/turtle_square_node.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -401,6 +443,7 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... list_install_components"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... roscpp_generate_messages_eus"
@@ -418,8 +461,11 @@ help:
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... turtle_square_node"
 	@echo "... std_msgs_generate_messages_py"
-	@echo "... test"
+	@echo "... src/turtle_square_node.o"
+	@echo "... src/turtle_square_node.i"
+	@echo "... src/turtle_square_node.s"
 .PHONY : help
 
 

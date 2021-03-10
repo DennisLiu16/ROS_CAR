@@ -4,7 +4,7 @@
 
 int main (int argc, char **argv)
 {
-    ros::init(argc, argv, "MyTurtle") ;
+    ros::init(argc, argv, "turtle_square_node") ;
 
     ros::NodeHandle nh;
 

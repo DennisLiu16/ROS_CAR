@@ -467,6 +467,19 @@ roscpp_generate_messages_nodejs/fast:
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named turtle_square_node
+
+# Build rule for target.
+turtle_square_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 turtle_square_node
+.PHONY : turtle_square_node
+
+# fast build rule for target.
+turtle_square_node/fast:
+	$(MAKE) -f turtle_square/CMakeFiles/turtle_square_node.dir/build.make turtle_square/CMakeFiles/turtle_square_node.dir/build
+.PHONY : turtle_square_node/fast
+
+#=============================================================================
 # Target rules for targets named std_msgs_generate_messages_py
 
 # Build rule for target.
@@ -515,6 +528,7 @@ help:
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_nodejs"
+	@echo "... turtle_square_node"
 	@echo "... std_msgs_generate_messages_py"
 .PHONY : help
 

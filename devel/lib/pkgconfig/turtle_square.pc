@@ -3,6 +3,6 @@ prefix=/home/dennis/ROS/ROS_CAR/devel
 Name: turtle_square
 Description: Description of turtle_square
 Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
+Cflags: -I/home/dennis/ROS/ROS_CAR/src/turtle_square/include
+Libs: -L${prefix}/lib -lturtle_square
+Requires: roscpp rospy std_msgs
