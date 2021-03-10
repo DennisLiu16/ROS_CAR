@@ -3,6 +3,8 @@
 
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o
  /home/dennis/ROS/ROS_CAR/src/turtle_square/src/turtle_square_node.cpp
+ /opt/ros/melodic/include/geometry_msgs/Twist.h
+ /opt/ros/melodic/include/geometry_msgs/Vector3.h
  /opt/ros/melodic/include/ros/advertise_options.h
  /opt/ros/melodic/include/ros/advertise_service_options.h
  /opt/ros/melodic/include/ros/assert.h
@@ -21,6 +23,7 @@ turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o
  /opt/ros/melodic/include/ros/message.h
  /opt/ros/melodic/include/ros/message_event.h
  /opt/ros/melodic/include/ros/message_forward.h
+ /opt/ros/melodic/include/ros/message_operations.h
  /opt/ros/melodic/include/ros/message_traits.h
  /opt/ros/melodic/include/ros/names.h
  /opt/ros/melodic/include/ros/node_handle.h
