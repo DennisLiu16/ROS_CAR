@@ -21,7 +21,7 @@ enum State
 State g_state = FORWARD;
 State g_last_state = FORWARD;
 bool g_first_goal_set = false;
-double factor = 1.0;
+double factor = 3;
 
 #define PI 3.141592
 
@@ -99,7 +99,7 @@ void forward(ros::Publisher twist_pub)
   }
   else
   {
-    commandTurtle(twist_pub, 1.0 * factor, 0.0);
+    commandTurtle(twist_pub, 1.0 , 0.0);
   }
 }
 
@@ -112,7 +112,7 @@ void turn(ros::Publisher twist_pub)
   }
   else
   {
-    commandTurtle(twist_pub, 0.0, 0.35 *factor);
+    commandTurtle(twist_pub, 0.0, 0.4 *factor);
   }
 }
 
@@ -158,6 +158,8 @@ int main(int argc, char** argv)
   ros::Subscriber pose_sub = nh.subscribe("turtle1/pose", 1, poseCallback);
   ros::Publisher twist_pub = nh.advertise<geometry_msgs::Twist>("turtle1/cmd_vel", 1000);
   ros::ServiceClient reset = nh.serviceClient<std_srvs::Empty>("reset");
+  sleep(1);
+
   ros::Timer timer = nh.createTimer(ros::Duration(0.001), boost::bind(timerCallback, _1, twist_pub));     // Hz - key
 
   std_srvs::Empty empty;
