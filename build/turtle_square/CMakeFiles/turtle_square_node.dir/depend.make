@@ -60,6 +60,10 @@ turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /o
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/ros/wall_timer.h
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/ros/wall_timer_options.h
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/rosconsole/macros_generated.h
+turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/std_srvs/Empty.h
+turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/std_srvs/EmptyRequest.h
+turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/std_srvs/EmptyResponse.h
+turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/turtlesim/Pose.h
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/xmlrpcpp/XmlRpcDecl.h
 turtle_square/CMakeFiles/turtle_square_node.dir/src/turtle_square_node.cpp.o: /opt/ros/melodic/include/xmlrpcpp/XmlRpcValue.h
 
