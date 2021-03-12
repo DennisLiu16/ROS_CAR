@@ -1,0 +1,2 @@
+turtle_square
+-DCATKIN_DEVEL_PREFIX=/home/dennis/ROS/ROS_CAR/devel -DCMAKE_INSTALL_PREFIX=/home/dennis/ROS/ROS_CAR/install -G Unix Makefiles

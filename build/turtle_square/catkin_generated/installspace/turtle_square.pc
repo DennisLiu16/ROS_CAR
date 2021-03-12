@@ -1,0 +1,8 @@
+prefix=/home/dennis/ROS/ROS_CAR/install
+
+Name: turtle_square
+Description: Description of turtle_square
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lturtle_square
+Requires: roscpp rospy std_msgs
