@@ -1,5 +1,10 @@
 {
     "python.autoComplete.extraPaths": [
         "/opt/ros/melodic/lib/python2.7/dist-packages"
-    ]
+    ],
+    "files.associations": {
+        "cmath": "cpp",
+        "fstream": "cpp",
+        "*.tcc": "cpp"
+    }
 }

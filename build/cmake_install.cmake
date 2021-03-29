@@ -131,7 +131,14 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/dennis/ROS/ROS_CAR/build/gtest/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/turtlebot_gazebo/turtlebot/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/turtlebot_gazebo/turtlebot_bringup/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/turtlebot_gazebo/turtlebot_capabilities/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/navigation_sim/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/simulation_env/cmake_install.cmake")
   include("/home/dennis/ROS/ROS_CAR/build/turtle_square/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/turtlebot_gazebo/turtlebot_teleop/cmake_install.cmake")
+  include("/home/dennis/ROS/ROS_CAR/build/turtlebot_gazebo/turtlebot_description/cmake_install.cmake")
 
 endif()
 

@@ -32,6 +32,7 @@ void poseCallback(const turtlesim::PoseConstPtr& pose)
 
 bool hasReachedGoal()
 {
+  
   return fabsf(g_pose->x - g_goal.x) < 0.01 && fabsf(g_pose->y - g_goal.y) < 0.01 && fabsf(g_pose->theta - g_goal.theta) < 0.005;
 }
 
