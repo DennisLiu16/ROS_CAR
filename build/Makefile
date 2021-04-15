@@ -307,7 +307,7 @@ roscpp_generate_messages_py: cmake_check_build_system
 
 # fast build rule for target.
 roscpp_generate_messages_py/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/roscpp_generate_messages_py.dir/build.make navigation_sim/CMakeFiles/roscpp_generate_messages_py.dir/build
+	$(MAKE) -f a_star/CMakeFiles/roscpp_generate_messages_py.dir/build.make a_star/CMakeFiles/roscpp_generate_messages_py.dir/build
 .PHONY : roscpp_generate_messages_py/fast
 
 #=============================================================================
@@ -320,7 +320,7 @@ roscpp_generate_messages_eus: cmake_check_build_system
 
 # fast build rule for target.
 roscpp_generate_messages_eus/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/roscpp_generate_messages_eus.dir/build.make navigation_sim/CMakeFiles/roscpp_generate_messages_eus.dir/build
+	$(MAKE) -f a_star/CMakeFiles/roscpp_generate_messages_eus.dir/build.make a_star/CMakeFiles/roscpp_generate_messages_eus.dir/build
 .PHONY : roscpp_generate_messages_eus/fast
 
 #=============================================================================
@@ -333,7 +333,7 @@ roscpp_generate_messages_lisp: cmake_check_build_system
 
 # fast build rule for target.
 roscpp_generate_messages_lisp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make navigation_sim/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make a_star/CMakeFiles/roscpp_generate_messages_lisp.dir/build
 .PHONY : roscpp_generate_messages_lisp/fast
 
 #=============================================================================
@@ -346,7 +346,7 @@ rosgraph_msgs_generate_messages_cpp: cmake_check_build_system
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make a_star/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_cpp/fast
 
 #=============================================================================
@@ -359,7 +359,7 @@ std_msgs_generate_messages_lisp: cmake_check_build_system
 
 # fast build rule for target.
 std_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make navigation_sim/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
 #=============================================================================
@@ -372,7 +372,7 @@ roscpp_generate_messages_cpp: cmake_check_build_system
 
 # fast build rule for target.
 roscpp_generate_messages_cpp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make navigation_sim/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make a_star/CMakeFiles/roscpp_generate_messages_cpp.dir/build
 .PHONY : roscpp_generate_messages_cpp/fast
 
 #=============================================================================
@@ -385,7 +385,7 @@ rosgraph_msgs_generate_messages_eus: cmake_check_build_system
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_eus/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
+	$(MAKE) -f a_star/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build.make a_star/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/build
 .PHONY : rosgraph_msgs_generate_messages_eus/fast
 
 #=============================================================================
@@ -398,7 +398,7 @@ rosgraph_msgs_generate_messages_lisp: cmake_check_build_system
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make a_star/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_lisp/fast
 
 #=============================================================================
@@ -411,7 +411,7 @@ std_msgs_generate_messages_cpp: cmake_check_build_system
 
 # fast build rule for target.
 std_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make navigation_sim/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+	$(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 #=============================================================================
@@ -424,7 +424,7 @@ rosgraph_msgs_generate_messages_nodejs: cmake_check_build_system
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
+	$(MAKE) -f a_star/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build.make a_star/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/build
 .PHONY : rosgraph_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
@@ -437,7 +437,7 @@ rosgraph_msgs_generate_messages_py: cmake_check_build_system
 
 # fast build rule for target.
 rosgraph_msgs_generate_messages_py/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make navigation_sim/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+	$(MAKE) -f a_star/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make a_star/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
 .PHONY : rosgraph_msgs_generate_messages_py/fast
 
 #=============================================================================
@@ -450,7 +450,7 @@ std_msgs_generate_messages_eus: cmake_check_build_system
 
 # fast build rule for target.
 std_msgs_generate_messages_eus/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make navigation_sim/CMakeFiles/std_msgs_generate_messages_eus.dir/build
+	$(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_eus.dir/build
 .PHONY : std_msgs_generate_messages_eus/fast
 
 #=============================================================================
@@ -463,7 +463,7 @@ std_msgs_generate_messages_nodejs: cmake_check_build_system
 
 # fast build rule for target.
 std_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make navigation_sim/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+	$(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
 .PHONY : std_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
@@ -476,7 +476,7 @@ roscpp_generate_messages_nodejs: cmake_check_build_system
 
 # fast build rule for target.
 roscpp_generate_messages_nodejs/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make navigation_sim/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
+	$(MAKE) -f a_star/CMakeFiles/roscpp_generate_messages_nodejs.dir/build.make a_star/CMakeFiles/roscpp_generate_messages_nodejs.dir/build
 .PHONY : roscpp_generate_messages_nodejs/fast
 
 #=============================================================================
@@ -489,7 +489,7 @@ std_msgs_generate_messages_py: cmake_check_build_system
 
 # fast build rule for target.
 std_msgs_generate_messages_py/fast:
-	$(MAKE) -f navigation_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build.make navigation_sim/CMakeFiles/std_msgs_generate_messages_py.dir/build
+	$(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_py.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_py.dir/build
 .PHONY : std_msgs_generate_messages_py/fast
 
 #=============================================================================
@@ -961,6 +961,19 @@ turtle_square_node/fast:
 .PHONY : turtle_square_node/fast
 
 #=============================================================================
+# Target rules for targets named turtlebot_control_pose
+
+# Build rule for target.
+turtlebot_control_pose: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 turtlebot_control_pose
+.PHONY : turtlebot_control_pose
+
+# fast build rule for target.
+turtlebot_control_pose/fast:
+	$(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build
+.PHONY : turtlebot_control_pose/fast
+
+#=============================================================================
 # Target rules for targets named turtlebot_trace_target
 
 # Build rule for target.
@@ -1177,6 +1190,7 @@ help:
 	@echo "... tf2_msgs_generate_messages_lisp"
 	@echo "... tf_subscribe"
 	@echo "... turtle_square_node"
+	@echo "... turtlebot_control_pose"
 	@echo "... turtlebot_trace_target"
 	@echo "... turtlebot_teleop_joy"
 	@echo "... clean_test_results_turtlebot_description"

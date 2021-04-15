@@ -1,2 +1,2 @@
-navigation_sim:simulation_env:turtle_square:turtlebot_gazebo/turtlebot:turtlebot_gazebo/turtlebot_bringup:turtlebot_gazebo/turtlebot_capabilities:turtlebot_gazebo/turtlebot_description:turtlebot_gazebo/turtlebot_teleop
+a_star:navigation_sim:simulation_env:turtle_square:turtlebot_gazebo/turtlebot:turtlebot_gazebo/turtlebot_bringup:turtlebot_gazebo/turtlebot_capabilities:turtlebot_gazebo/turtlebot_description:turtlebot_gazebo/turtlebot_teleop
 -DCATKIN_DEVEL_PREFIX=/home/dennis/ROS/ROS_CAR/devel -DCMAKE_INSTALL_PREFIX=/home/dennis/ROS/ROS_CAR/install -G Unix Makefiles

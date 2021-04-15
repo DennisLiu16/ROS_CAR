@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/opt/ros/melodic/include/**",
+        "/home/dennis/ROS/ROS_CAR/src/a_star/include/**",
+        "/home/dennis/ROS/ROS_CAR/src/navigation_sim/include/**",
+        "/home/dennis/ROS/ROS_CAR/src/turtle_square/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

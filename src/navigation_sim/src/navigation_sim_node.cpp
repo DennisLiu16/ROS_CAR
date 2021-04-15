@@ -6,7 +6,7 @@
 
 #define PI 3.141592
 #define StopBand 0.1
-#define StopBandAngle 0.1
+#define StopBandAngle 0.2
 
 //sub
 geometry_msgs::PoseStampedConstPtr robot_goal;

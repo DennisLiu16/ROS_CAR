@@ -80,6 +80,27 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -102,27 +123,6 @@ test:
 test/fast: test
 
 .PHONY : test/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/rule:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/rule
+.PHONY : turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/rule
+
+# Convenience name for target.
+turtlebot_control_pose: turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/rule
+
+.PHONY : turtlebot_control_pose
+
+# fast build rule for target.
+turtlebot_control_pose/fast:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build
+.PHONY : turtlebot_control_pose/fast
+
+# Convenience name for target.
 turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_trace_target.dir/rule:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_trace_target.dir/rule
 .PHONY : turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_trace_target.dir/rule
@@ -196,6 +211,33 @@ turtlebot_teleop_joy: turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_tel
 turtlebot_teleop_joy/fast:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_teleop_joy.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_teleop_joy.dir/build
 .PHONY : turtlebot_teleop_joy/fast
+
+src/control_pose.o: src/control_pose.cpp.o
+
+.PHONY : src/control_pose.o
+
+# target to build an object file
+src/control_pose.cpp.o:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/src/control_pose.cpp.o
+.PHONY : src/control_pose.cpp.o
+
+src/control_pose.i: src/control_pose.cpp.i
+
+.PHONY : src/control_pose.i
+
+# target to preprocess a source file
+src/control_pose.cpp.i:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/src/control_pose.cpp.i
+.PHONY : src/control_pose.cpp.i
+
+src/control_pose.s: src/control_pose.cpp.s
+
+.PHONY : src/control_pose.s
+
+# target to generate assembly for a file
+src/control_pose.cpp.s:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/build.make turtlebot_gazebo/turtlebot_teleop/CMakeFiles/turtlebot_control_pose.dir/src/control_pose.cpp.s
+.PHONY : src/control_pose.cpp.s
 
 src/trace_target.o: src/trace_target.cpp.o
 
@@ -259,13 +301,17 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install"
+	@echo "... list_install_components"
+	@echo "... turtlebot_control_pose"
+	@echo "... edit_cache"
 	@echo "... turtlebot_trace_target"
 	@echo "... install/local"
 	@echo "... test"
-	@echo "... list_install_components"
-	@echo "... edit_cache"
 	@echo "... turtlebot_teleop_joy"
 	@echo "... rebuild_cache"
+	@echo "... src/control_pose.o"
+	@echo "... src/control_pose.i"
+	@echo "... src/control_pose.s"
 	@echo "... src/trace_target.o"
 	@echo "... src/trace_target.i"
 	@echo "... src/trace_target.s"
