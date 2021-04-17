@@ -56,18 +56,6 @@ CMAKE_BINARY_DIR = /home/dennis/ROS/ROS_CAR/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -90,6 +78,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # Special rule for the target list_install_components
 list_install_components:
@@ -124,16 +123,17 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -288,6 +288,21 @@ rosgraph_msgs_generate_messages_lisp/fast:
 .PHONY : rosgraph_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
+a_star/CMakeFiles/a_star_node.dir/rule:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 a_star/CMakeFiles/a_star_node.dir/rule
+.PHONY : a_star/CMakeFiles/a_star_node.dir/rule
+
+# Convenience name for target.
+a_star_node: a_star/CMakeFiles/a_star_node.dir/rule
+
+.PHONY : a_star_node
+
+# fast build rule for target.
+a_star_node/fast:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f a_star/CMakeFiles/a_star_node.dir/build.make a_star/CMakeFiles/a_star_node.dir/build
+.PHONY : a_star_node/fast
+
+# Convenience name for target.
 a_star/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f CMakeFiles/Makefile2 a_star/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
 .PHONY : a_star/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
@@ -392,15 +407,42 @@ std_msgs_generate_messages_py/fast:
 	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f a_star/CMakeFiles/std_msgs_generate_messages_py.dir/build.make a_star/CMakeFiles/std_msgs_generate_messages_py.dir/build
 .PHONY : std_msgs_generate_messages_py/fast
 
+src/a_star.o: src/a_star.cpp.o
+
+.PHONY : src/a_star.o
+
+# target to build an object file
+src/a_star.cpp.o:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f a_star/CMakeFiles/a_star_node.dir/build.make a_star/CMakeFiles/a_star_node.dir/src/a_star.cpp.o
+.PHONY : src/a_star.cpp.o
+
+src/a_star.i: src/a_star.cpp.i
+
+.PHONY : src/a_star.i
+
+# target to preprocess a source file
+src/a_star.cpp.i:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f a_star/CMakeFiles/a_star_node.dir/build.make a_star/CMakeFiles/a_star_node.dir/src/a_star.cpp.i
+.PHONY : src/a_star.cpp.i
+
+src/a_star.s: src/a_star.cpp.s
+
+.PHONY : src/a_star.s
+
+# target to generate assembly for a file
+src/a_star.cpp.s:
+	cd /home/dennis/ROS/ROS_CAR/build && $(MAKE) -f a_star/CMakeFiles/a_star_node.dir/build.make a_star/CMakeFiles/a_star_node.dir/src/a_star.cpp.s
+.PHONY : src/a_star.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... list_install_components"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... roscpp_generate_messages_eus"
@@ -412,6 +454,8 @@ help:
 	@echo "... install"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
+	@echo "... install/strip"
+	@echo "... a_star_node"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_py"
@@ -419,7 +463,9 @@ help:
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_py"
-	@echo "... test"
+	@echo "... src/a_star.o"
+	@echo "... src/a_star.i"
+	@echo "... src/a_star.s"
 .PHONY : help
 
 
