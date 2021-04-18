@@ -5,7 +5,7 @@
 #include <geometry_msgs/Twist.h>  //cmd_vel
 
 #define PI 3.141592
-#define StopBand 0.1
+#define StopBand 0.05
 #define StopBandAngle 0.2
 
 //sub
@@ -52,7 +52,10 @@ void goalCallback(const geometry_msgs::PoseStampedConstPtr &goal)
 
 bool hasReachedGoal(void)
 {
+    /*tell a_star arrived*/
+
     return (fabsf(delta_x) < StopBand) && (fabsf(delta_y) < StopBand) && (fabsf(theta_delta) < StopBandAngle) ;
+    
 }
 
 float orientation2theta(void)

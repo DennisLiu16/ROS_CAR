@@ -15,7 +15,11 @@ geometry_msgs/PoseStamped.h
 -
 iostream
 -
+vector
+-
 deque
+-
+list
 -
 stdio.h
 -
