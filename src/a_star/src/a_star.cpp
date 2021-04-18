@@ -14,7 +14,7 @@
 #include <math.h>
 
 /*define*/
-#define LOOP_RATE 100
+#define LOOP_RATE 1
 /*Map Related*/
 #define XMAP_SIZE 10    //in meter
 #define YMAP_SIZE 10    //in meter
@@ -35,6 +35,8 @@
 /*Print Related*/
 #define PRINT_ALL_DESTINATION 0
 #define PRINT_A_STAR_PATH 1
+/*Node Related*/
+#define CENTER YMAX/2*(XMAX+1)+(XMAX/2)
 
 /** ref doc : 
 *  1. A* algorithm implement:https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
@@ -42,6 +44,7 @@
 *  3. Sub Once:https://charon-cheung.github.io/2019/01/16/ROS/ROS%20Kinetic%E7%9F%A5%E8%AF%86/%E5%8F%AA%E5%8F%91%E5%B8%83%E5%92%8C%E8%AE%A2%E9%98%85%E4%B8%80%E6%AC%A1%E6%B6%88%E6%81%AF/#%E5%8F%AA%E5%8F%91%E5%B8%83%E4%B8%80%E6%AC%A1%E6%B6%88%E6%81%AF
 *  4. STL Vector:https://ithelp.ithome.com.tw/articles/10231601
 *  5. github src:https://github.com/OneLoneCoder/videos/blob/master/OneLoneCoder_PathFinding_AStar.cpp
+*  6. quaternions:https://quaternions.online/   -> (-pi)~(pi)
 */ 
 
 /**
@@ -131,13 +134,12 @@ w
 
   /*msg df*/
   nav_msgs::OccupancyGridConstPtr my_map;
-  geometry_msgs::PoseStampedPtr my_robot_goal;
 
   /*vars*/
   int Map[100][100] = {};
   int eMap[100][100] = {};
   //target in 2x4 matrix
-  std::deque<true_Coordinate> destination_queue;
+  std::deque<true_Coordinate> destination_deque;
   std::deque<Node*> AStar_Path;
 
   Node *nodes = nullptr;
@@ -145,19 +147,6 @@ w
   Node *nodeEnd = nullptr;
   
   /*function*/
-  static bool isValid(int x, int y)
-  {
-      if (x <= XMAX && y <= YMAX && x >= XMIN && y >= YMIN)
-      {
-        /*check state from eMap*/
-        if(eMap[x][y] == SAFE)
-            return true; 
-        else 
-            return false;
-      }
-      return false;
-  }
-
   static bool isDestination(int x, int y,bool con)
   {
       switch(con)
@@ -172,9 +161,9 @@ w
                     .y = new_y
                     
                 };
-                std::deque<true_Coordinate>::iterator iter = find(destination_queue.begin(),destination_queue.end(),_current);
+                std::deque<true_Coordinate>::iterator iter = find(destination_deque.begin(),destination_deque.end(),_current);
                 /*find in deque*/
-                if(iter != destination_queue.end()) 
+                if(iter != destination_deque.end()) 
                     return true;
                 return false;
                 break;
@@ -332,19 +321,19 @@ w
           .y = 4.00
       };
 
-      destination_queue.push_back(target_1);
-      destination_queue.push_back(target_2);
-      destination_queue.push_back(target_3);
-      destination_queue.push_back(target_4);
+      destination_deque.push_back(target_1);
+      destination_deque.push_back(target_2);
+      destination_deque.push_back(target_3);
+      destination_deque.push_back(target_4);
   }
 
   bool updateNodeEnd()
   {
-      if(!destination_queue.empty())
+      if(!destination_deque.empty())
       {
           true_Coordinate end;
-          end = destination_queue.front();
-          destination_queue.pop_front();
+          end = destination_deque.front();
+          destination_deque.pop_front();
           /*true coordinate to grid coordinate*/
           end.x += (float)XMAP_SIZE/2;  //shift (0.0,0.0)
           end.y += (float)YMAP_SIZE/2;
@@ -359,7 +348,7 @@ w
       return false;
   }
 
-  bool InitNodes()
+  bool InitNodes(size_t start_place)
   {
        /*Init All Nodes*/
       nodes = new Node[(XMAX+1)*(YMAX+1)];  //build all nodes for eMap
@@ -407,89 +396,84 @@ w
           }
       }
       /*Init Start at center*/
-      nodeStart = &nodes[YMAX/2 *(XMAX+1) + (XMAX/2)];
+      nodeStart = &nodes[start_place];
       /*Init first nodeEnd to target_1*/
       return updateNodeEnd();
   }
 
-  bool Solve_AStar()
+  bool Solve_AStar(size_t start_place)
   {
-      ROS_INFO("Start Solve A Star");
-      auto distance = [](Node* a, Node* b)
+      bool ret = InitNodes(start_place);
+      if(ret)
       {
-          return sqrtf((a->self.x - b->self.x)*(a->self.x - b->self.x)+(a->self.y - b->self.y)*(a->self.y - b->self.y));
-      };
-
-      auto heuristic = [distance](Node* a, Node* b)
-      {
-          return distance(a,b);
-      };
-      
-      /*init nodeCurrent and update fcost and gcost*/
-      Node* nodeCurrent = nodeStart;
-      nodeStart->gCost = 0.0f;
-      nodeStart->fCost = heuristic(nodeStart,nodeEnd);
-
-      /*init NotTestList and put nodeStart in it*/
-      std::list<Node*> listNotTestedNodes;
-      listNotTestedNodes.push_back(nodeStart);
-
-      /*A* Main*/
-      while(!listNotTestedNodes.empty())
-      {
-          if(nodeCurrent == nodeEnd)
-          {
-              /*load next destination and break if no more destination*/
-              bool ret = updateNodeEnd();
-              if(!ret)
-                break;
-          }
-          listNotTestedNodes.sort([](const Node* lhs, const Node* rhs){return lhs->fCost < rhs->fCost;});
-
-          /*ditch visited nodes*/
-          while(!listNotTestedNodes.empty() && listNotTestedNodes.front()->bVisited)
-            listNotTestedNodes.pop_front();
-        
-          /*ensure list not empty after ditched some node*/
-          if(listNotTestedNodes.empty())
-            break;
-        
-          nodeCurrent = listNotTestedNodes.front();
-          nodeCurrent->bVisited = true;
-
-          /*check neighbors*/
-          for(auto nodeNeighbor : nodeCurrent->vecNeighbors)
-          {
-              /*add nodeNeighbor to NotTestedList only if not visited and not obstacle*/
-              if(!nodeNeighbor->bVisited && nodeNeighbor->bObstacle == SAFE)
-                listNotTestedNodes.push_back(nodeNeighbor);
-
-              /*compare gcost of neighbors to decide nodeCurrent become parent of it's neighbors or not*/
-              float fPossiblyLowerGoal = nodeCurrent->gCost + distance(nodeCurrent,nodeNeighbor);  
-              if(fPossiblyLowerGoal < nodeNeighbor->gCost)
-              {
-                  nodeNeighbor->parent = nodeCurrent;
-                  nodeNeighbor->gCost = fPossiblyLowerGoal;
-                  nodeNeighbor->fCost = nodeNeighbor->gCost + heuristic(nodeNeighbor, nodeEnd);
-              }
-          }
-      }
-
-      /*Store Path in Deque*/
-      if(nodeEnd != nullptr)
-      {
-        Node* nodeCurrent = nodeEnd;
-        while(nodeCurrent->parent != nullptr)
+        ROS_INFO("Start Solve A Star");
+        auto distance = [](Node* a, Node* b)
         {
-            AStar_Path.push_front(nodeCurrent);
-            nodeCurrent = nodeCurrent->parent;
-        }
-      }
-      
-      print(PRINT_A_STAR_PATH);
-      ROS_INFO("A Star Finished");
-      return true;
+            return sqrtf((a->self.x - b->self.x)*(a->self.x - b->self.x)+(a->self.y - b->self.y)*(a->self.y - b->self.y));
+        };
 
+        auto heuristic = [distance](Node* a, Node* b)
+        {
+            return distance(a,b);
+        };
+        
+        /*init nodeCurrent and update fcost and gcost*/
+        Node* nodeCurrent = nodeStart;
+        nodeStart->gCost = 0.0f;
+        nodeStart->fCost = heuristic(nodeStart,nodeEnd);
+
+        /*init NotTestList and put nodeStart in it*/
+        std::list<Node*> listNotTestedNodes;
+        listNotTestedNodes.push_back(nodeStart);
+
+        /*A* Main*/
+        while(!listNotTestedNodes.empty() && nodeCurrent != nodeEnd)
+        {
+            listNotTestedNodes.sort([](const Node* lhs, const Node* rhs){return lhs->fCost < rhs->fCost;});
+
+            /*ditch visited nodes*/
+            while(!listNotTestedNodes.empty() && listNotTestedNodes.front()->bVisited)
+                listNotTestedNodes.pop_front();
+            
+            /*ensure list not empty after ditched some node*/
+            if(listNotTestedNodes.empty())
+                break;
+            
+            nodeCurrent = listNotTestedNodes.front();
+            nodeCurrent->bVisited = true;
+
+            /*check neighbors*/
+            for(auto nodeNeighbor : nodeCurrent->vecNeighbors)
+            {
+                /*add nodeNeighbor to NotTestedList only if not visited and not obstacle*/
+                if(!nodeNeighbor->bVisited && nodeNeighbor->bObstacle == SAFE)
+                    listNotTestedNodes.push_back(nodeNeighbor);
+
+                /*compare gcost of neighbors to decide nodeCurrent become parent of it's neighbors or not*/
+                float fPossiblyLowerGoal = nodeCurrent->gCost + distance(nodeCurrent,nodeNeighbor);  
+                if(fPossiblyLowerGoal < nodeNeighbor->gCost)
+                {
+                    nodeNeighbor->parent = nodeCurrent;
+                    nodeNeighbor->gCost = fPossiblyLowerGoal;
+                    nodeNeighbor->fCost = nodeNeighbor->gCost + heuristic(nodeNeighbor, nodeEnd);
+                }
+            }
+        }
+        /*Store Path in Deque*/
+        if(nodeEnd != nullptr)
+        {
+            Node* nodeCurrent = nodeEnd;
+            
+            while(nodeCurrent->parent != nullptr)
+            {
+                AStar_Path.push_front(nodeCurrent);
+                nodeCurrent = nodeCurrent->parent;
+            }
+        }       
+        print(PRINT_A_STAR_PATH);
+        ROS_INFO("A Star Finished");
+      }
+      return ret;
   }
   
   int main(int argc, char** argv)
@@ -497,7 +481,7 @@ w
       ros::init(argc,argv,"A_star_Sim");
       ros::NodeHandle nh;
       /*get topic once*/
-      my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));
+      my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));     
       ros::Publisher goal_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",1000);
       ros::Rate rate(LOOP_RATE);
       sleep(1);
@@ -507,14 +491,27 @@ w
       {
         InitDestination();
         EnlargeMap();
-        bool ret = InitNodes();
-        if(ret == true)
-            Solve_AStar();
-        
-        while(ros::ok() && ret)
-        {
-            /**/
+        Solve_AStar(CENTER);
 
+        while(ros::ok())
+        {
+            if(!AStar_Path.empty())
+            {
+                true_Coordinate f;
+                Node* next = AStar_Path.front();
+                f.x = (float)(next->self.x+1)/XMAP_SIZE + X_SHIFT;
+                f.y = (float)(next->self.y+1)/YMAP_SIZE + Y_SHIFT;
+                geometry_msgs::PoseStamped my_robot_goal;
+                my_robot_goal.pose.position.x = f.x;
+                my_robot_goal.pose.position.y = f.y;
+                my_robot_goal.pose.orientation.w = 1.0;
+                my_robot_goal.pose.orientation.z = 0.0;
+                goal_pub.publish(my_robot_goal);
+                printf("%d,%d\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y);
+                AStar_Path.pop_front();
+            }
+            ros::spinOnce();
+            ros::Duration(2.0).sleep();
         }
       }
       else
