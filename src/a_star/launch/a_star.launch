@@ -1,0 +1,4 @@
+<launch>
+    <node name="CarController" pkg="navigation_sim" type="navigation_sim_node"/></node>
+    <node name="AStar_PathPlanner" pkg="a_star" type="a_star_node" output="screen"/></node>
+</launch>
