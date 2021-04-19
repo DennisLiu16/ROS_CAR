@@ -419,7 +419,7 @@ w
       int p_y = _current->parent->self.y;
 
       float theta = atan2((float)y-p_y,(float)x-p_x);
-      printf("%d,%d,%f\n",p_x,p_y,theta/3.14*180.0);
+      //printf("%d,%d,%f\n",p_x,p_y,theta/3.14*180.0);
       _current->parent->w = cos(theta/2);
       _current->parent->z = sin(theta/2);
   }
