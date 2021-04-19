@@ -514,7 +514,7 @@ w
       /*get topic once*/
       my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));
       ros::Publisher goal_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",1000);
-      ros::Subscriber reach_sub = nh.subscribe("/isReached",1,reachCallBack);
+      ros::Subscriber reach_sub = nh.subscribe("/isReached",10,reachCallBack);
       ros::Rate rate(LOOP_RATE);
       sleep(1);
 
@@ -524,6 +524,7 @@ w
         InitDestination();  
         EnlargeMap();
         bool navigationState = false;   /*in navigation*/
+        int count = 0;
         while(ros::ok())
         {
             if(!navigationState)
@@ -541,13 +542,14 @@ w
             else
             {
                 /*update topic*/
-                if(my_reached->Reached)
+                if(my_reached->Reached || count == 0)
                 {
                     /*check remain element is Destination or not*/
                     if(AStar_Path.front() == nodeEnd)
                     {
                         /*update navigationState and add nodeEnd's w, z*/
                         navigationState = false;
+                        count = 0;
                         AStar_Path.front()->w = AStar_Path.front()->parent->w;
                         AStar_Path.front()->z = AStar_Path.front()->parent->z;
                     }
@@ -565,10 +567,12 @@ w
                     goal_pub.publish(my_robot_goal);
                     printf("%d,%d\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y);
                     AStar_Path.pop_front();
+                    count++;
                 }
                   
             }
-            ros::spinOnce();      
+            ros::spinOnce();
+            rate.sleep();      
         }
       }
       else

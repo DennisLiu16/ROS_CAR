@@ -43,7 +43,6 @@ float theta_delta = 0.0;
 void poseCallback(const geometry_msgs::TwistConstPtr &pose)
 {
   robot_pose = pose;
-
 }
 
 void goalCallback(const geometry_msgs::PoseStampedConstPtr &goal)
@@ -166,7 +165,7 @@ int main(int argc, char** argv)
     ros::Subscriber robot_pose_sub = nh.subscribe("/robot_pose", 1, poseCallback);
     ros::Subscriber goal_sub = nh.subscribe("/move_base_simple/goal", 1, goalCallback);
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
-    ros::Publisher reach_pub = nh.advertise<a_star::isReached>("/isReadched",100);
+    ros::Publisher reach_pub = nh.advertise<a_star::isReached>("/isReached",100);
     ros::Rate rate(10);
     sleep(1);
 
@@ -174,7 +173,12 @@ int main(int argc, char** argv)
     {
         /*check goal is not empty , or it will cause px!=0 err*/
         if(!robot_goal)
-            ;
+        {
+            a_star::isReached myReached;
+            myReached.Reached = false;
+            reach_pub.publish(myReached);
+        }
+            
         else
         {
             controller(reach_pub);
