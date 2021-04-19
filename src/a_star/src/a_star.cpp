@@ -36,6 +36,9 @@
 /*Print Related*/
 #define PRINT_ALL_DESTINATION 0
 #define PRINT_A_STAR_PATH 1
+/*Node Related*/
+#define CENTER YMAX/2*(XMAX+1)+XMAX/2
+#define NodeINIT CENTER
 
 /** ref doc : 
 *  1. A* algorithm implement:https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
@@ -134,7 +137,7 @@ w
 
   /*msg df*/
   nav_msgs::OccupancyGridConstPtr my_map;
-  a_star::isReached my_reached; 
+  a_star::isReachedConstPtr my_reached; 
 
   /*vars*/
   int Map[100][100] = {};
@@ -148,6 +151,11 @@ w
   Node *nodeEnd = nullptr;
   
   /*function*/
+  void reachCallBack(const a_star::isReachedConstPtr Reach)
+  {
+      my_reached = Reach;
+  }
+
   static bool isDestination(int x, int y,bool con)
   {
       switch(con)
@@ -417,9 +425,15 @@ w
 
   bool Solve_AStar(Node* start_node)
   {
-      size_t start_place = (start_node->self.y)*(XMAX+1)+start_node->self.x;
-      printf("start place:%lu\n",start_place);
+      /*confirm Node is not nullptr*/
+      size_t start_place;
+      if(start_node == nullptr)
+        start_place = NodeINIT;
+      else
+        start_place= (size_t)(start_node->self.y)*(XMAX+1)+start_node->self.x;
+
       bool ret = InitNodes(start_place);
+
       if(ret)
       {
         ROS_INFO("Start Solve A Star");
@@ -499,27 +513,23 @@ w
       ros::NodeHandle nh;
       /*get topic once*/
       my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));
-
       ros::Publisher goal_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",1000);
-
+      ros::Subscriber reach_sub = nh.subscribe("/isReached",1,reachCallBack);
       ros::Rate rate(LOOP_RATE);
       sleep(1);
 
       /* Enlarge the map */
       if(my_map!=nullptr)
       {
-        InitDestination();
+        InitDestination();  
         EnlargeMap();
-        printf("Enter");
-        bool navigationState = 0;   /*in navigation*/
+        bool navigationState = false;   /*in navigation*/
         while(ros::ok())
         {
             if(!navigationState)
             {
             /*update A Star*/
-                /*first in*/
-                if(nodeStart == nullptr)
-                    nodeEnd = &nodes[YMAX/2*(XMAX+1)+XMAX/2];
+                /*first in will be nullptr*/
                 bool ret = Solve_AStar(nodeEnd);
                 /*No more Destination*/
                 if(!ret)
@@ -531,7 +541,7 @@ w
             else
             {
                 /*update topic*/
-                if(sleep(2))
+                if(my_reached->Reached)
                 {
                     /*check remain element is Destination or not*/
                     if(AStar_Path.front() == nodeEnd)

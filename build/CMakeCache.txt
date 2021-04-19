@@ -287,6 +287,9 @@ _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 //Value Computed by CMake
 a_star_BINARY_DIR:STATIC=/home/dennis/ROS/ROS_CAR/build/a_star
 
+//The directory containing a CMake configuration file for a_star.
+a_star_DIR:PATH=/home/dennis/ROS/ROS_CAR/devel/share/a_star/cmake
+
 //Value Computed by CMake
 a_star_SOURCE_DIR:STATIC=/home/dennis/ROS/ROS_CAR/src/a_star
 
@@ -379,7 +382,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 joy_DIR:PATH=/opt/ros/melodic/share/joy/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/melodic/lib/libxmlrpcpp.so
+lib:FILEPATH=lib-NOTFOUND
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/melodic/share/message_filters/cmake
@@ -626,7 +629,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=14
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=9
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -3,6 +3,7 @@
 #include <geometry_msgs/PoseStamped.h>  //move base goal msg type
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Twist.h>  //cmd_vel
+#include <a_star/isReached.h>
 
 #define PI 3.141592
 #define StopBand 0.05
@@ -52,10 +53,7 @@ void goalCallback(const geometry_msgs::PoseStampedConstPtr &goal)
 
 bool hasReachedGoal(void)
 {
-    /*tell a_star arrived*/
-
     return (fabsf(delta_x) < StopBand) && (fabsf(delta_y) < StopBand) && (fabsf(theta_delta) < StopBandAngle) ;
-    
 }
 
 float orientation2theta(void)
@@ -108,24 +106,28 @@ void updateState(void)
     }
 }
 
-void controller(void)
+void controller(ros::Publisher reach_pub)
 {
     updateState();
     /*rho-alpha-beta controller*/
+    /*tell a_star arrived*/
+    a_star::isReached myReached;
     if(hasReachedGoal())
     {
         v = 0;
         omega = 0;
+        /*pub here*/
+        myReached.Reached = true;
         ROS_INFO("Reached the Goal\n");
     }
     else
     {
-        /*update rho alpha beta*/
-        
         /*update v omega*/
         v = k_rho * rho;
         omega = k_alpha * alpha + k_beta * beta;
+        myReached.Reached = false;
     }
+    reach_pub.publish(myReached);
 }
 
 void commandCar(ros::Publisher vel_pub)
@@ -164,6 +166,7 @@ int main(int argc, char** argv)
     ros::Subscriber robot_pose_sub = nh.subscribe("/robot_pose", 1, poseCallback);
     ros::Subscriber goal_sub = nh.subscribe("/move_base_simple/goal", 1, goalCallback);
     ros::Publisher vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
+    ros::Publisher reach_pub = nh.advertise<a_star::isReached>("/isReadched",100);
     ros::Rate rate(10);
     sleep(1);
 
@@ -174,7 +177,7 @@ int main(int argc, char** argv)
             ;
         else
         {
-            controller();
+            controller(reach_pub);
             commandCar(vel_pub);
             printGoalInfo();
             printPoseInfo();
