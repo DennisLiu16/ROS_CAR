@@ -23,7 +23,7 @@
 #define Y_SHIFT -5.0
 #define XMIN 0
 #define YMIN 0 
-#define E_SIZE 3    //Enlarge size
+#define E_SIZE 4    //Enlarge size
 #define XMAX 99
 #define YMAX 99
 #define EMPTY -128
@@ -559,13 +559,15 @@ w
                     Node* nodeNext = AStar_Path.front();
                     f.x = (float)(nodeNext->self.x+1)/XMAP_SIZE + X_SHIFT;
                     f.y = (float)(nodeNext->self.y+1)/YMAP_SIZE + Y_SHIFT;
+                    
                     my_robot_goal.pose.position.x = f.x;
                     my_robot_goal.pose.position.y = f.y;
                     my_robot_goal.pose.orientation.w = nodeNext->w;
                     my_robot_goal.pose.orientation.z = nodeNext->z;
 
                     goal_pub.publish(my_robot_goal);
-                    printf("%d,%d\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y);
+                    float tmp = atan2(2*(nodeNext->w*nodeNext->z),1-2*(nodeNext->z*nodeNext->z));
+                    printf("%d,%d,%f\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y,tmp);
                     AStar_Path.pop_front();
                     count++;
                 }
