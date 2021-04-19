@@ -151,7 +151,7 @@ w
   Node *nodeEnd = nullptr;
   
   /*function*/
-  void reachCallBack(const a_star::isReachedConstPtr Reach)
+  void reachCallBack(const a_star::isReachedConstPtr &Reach)
   {
       my_reached = Reach;
   }

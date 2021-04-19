@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(navigation_sim)
-
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -101,8 +100,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES navigation_sim
+  INCLUDE_DIRS include 
+  LIBRARIES navigation_sim 
   CATKIN_DEPENDS roscpp std_msgs
 #  DEPENDS system_lib
 )
@@ -116,7 +115,9 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  "/home/dennis/ROS/ROS_CAR/devel/include"
 )
+
 
 # Declare a C++ library
 # add_library(${PROJECT_NAME}

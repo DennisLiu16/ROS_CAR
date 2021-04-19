@@ -20,6 +20,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/dennis/ROS/ROS_CAR/src/navigation_sim/include"
   "/opt/ros/melodic/include"
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
+  "/home/dennis/ROS/ROS_CAR/devel/include"
   )
 
 # Targets to which this target links.
