@@ -418,7 +418,8 @@ w
       int p_x = _current->parent->self.x;
       int p_y = _current->parent->self.y;
 
-      float theta = atan2((float)x-p_x,(float)y-p_y);
+      float theta = atan2((float)y-p_y,(float)x-p_x);
+      printf("%d,%d,%f\n",p_x,p_y,theta/3.14*180.0);
       _current->parent->w = cos(theta/2);
       _current->parent->z = sin(theta/2);
   }
@@ -567,7 +568,7 @@ w
 
                     goal_pub.publish(my_robot_goal);
                     float tmp = atan2(2*(nodeNext->w*nodeNext->z),1-2*(nodeNext->z*nodeNext->z));
-                    printf("%d,%d,%f\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y,tmp);
+                    printf("%d,%d,%f\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y,tmp/3.14*180);
                     AStar_Path.pop_front();
                     count++;
                 }

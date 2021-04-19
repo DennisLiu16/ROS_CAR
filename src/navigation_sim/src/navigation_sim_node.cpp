@@ -6,7 +6,7 @@
 #include <a_star/isReached.h>
 
 #define PI 3.141592
-#define StopBand 0.2
+#define StopBand 0.5
 #define StopBandAngle 0.5
 
 //sub
@@ -15,9 +15,9 @@ geometry_msgs::TwistConstPtr robot_pose;
 
 //global var - gain
 // 0.3 , 1.4 ,-1.2
-float k_rho = 0.23;  //0.3
-float k_alpha = 1.1;  //1.45
-float k_beta = -0.95;   //-1.3
+float k_rho = 0.2;  //0.3
+float k_alpha = 1.5;  //1.45
+float k_beta = -1.4;   //-1.3
 
 //global var - cmd
 float v = 0.0;
@@ -52,7 +52,7 @@ void goalCallback(const geometry_msgs::PoseStampedConstPtr &goal)
 
 bool hasReachedGoal(void)
 {
-    return sqrtf(delta_x*delta_x + delta_y*delta_y) <= StopBand && theta_delta <= StopBandAngle;
+    return sqrtf(delta_x*delta_x + delta_y*delta_y) <= StopBand ;
 }
 
 float orientation2theta(void)
