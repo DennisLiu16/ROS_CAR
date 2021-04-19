@@ -6,8 +6,8 @@
 #include <a_star/isReached.h>
 
 #define PI 3.141592
-#define StopBand 0.05
-#define StopBandAngle 0.2
+#define StopBand 0.3
+#define StopBandAngle 0.3
 
 //sub
 geometry_msgs::PoseStampedConstPtr robot_goal;
@@ -113,8 +113,11 @@ void controller(ros::Publisher reach_pub)
     a_star::isReached myReached;
     if(hasReachedGoal())
     {
-        v = 0;
-        omega = 0;
+        /*abort stop*/
+        // v = 0;
+        // omega = 0;
+        v = k_rho * rho;
+        omega = k_alpha * alpha + k_beta * beta;
         /*pub here*/
         myReached.Reached = true;
         ROS_INFO("Reached the Goal\n");
