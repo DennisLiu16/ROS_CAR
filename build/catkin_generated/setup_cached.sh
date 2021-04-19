@@ -8,3 +8,4 @@
 
 # modified environment variables
 export PWD='/home/dennis/ROS/ROS_CAR/build'
+export PYTHONPATH="/home/dennis/ROS/ROS_CAR/devel/lib/python2.7/dist-packages:$PYTHONPATH"

@@ -3,6 +3,6 @@ prefix=/home/dennis/ROS/ROS_CAR/devel
 Name: a_star
 Description: Description of a_star
 Version: 0.0.0
-Cflags: -I/home/dennis/ROS/ROS_CAR/src/a_star/include
+Cflags: -I/home/dennis/ROS/ROS_CAR/devel/include -I/home/dennis/ROS/ROS_CAR/src/a_star/include
 Libs: -L${prefix}/lib -la_star
-Requires: roscpp std_msgs
+Requires: roscpp std_msgs message_runtime

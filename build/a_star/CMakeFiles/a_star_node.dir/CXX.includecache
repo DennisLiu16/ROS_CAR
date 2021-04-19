@@ -6,12 +6,30 @@
 
 #IncludeRegexTransform: 
 
+/home/dennis/ROS/ROS_CAR/devel/include/a_star/isReached.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
 /home/dennis/ROS/ROS_CAR/src/a_star/src/a_star.cpp
 ros/ros.h
 -
 nav_msgs/OccupancyGrid.h
 -
 geometry_msgs/PoseStamped.h
+-
+a_star/isReached.h
 -
 iostream
 -

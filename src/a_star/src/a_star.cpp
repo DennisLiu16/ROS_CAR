@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <a_star/isReached.h>
 /*for vector include*/
 #include <iostream>
 #include <vector>
@@ -14,7 +15,7 @@
 #include <math.h>
 
 /*define*/
-#define LOOP_RATE 1
+#define LOOP_RATE 10
 /*Map Related*/
 #define XMAP_SIZE 10    //in meter
 #define YMAP_SIZE 10    //in meter
@@ -35,8 +36,6 @@
 /*Print Related*/
 #define PRINT_ALL_DESTINATION 0
 #define PRINT_A_STAR_PATH 1
-/*Node Related*/
-#define CENTER YMAX/2*(XMAX+1)+(XMAX/2)
 
 /** ref doc : 
 *  1. A* algorithm implement:https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h
@@ -128,12 +127,14 @@ w
       Node* parent;
       std::vector<Node*> vecNeighbors;  //inc eight neighbor region
       float gCost,fCost;  //g -> Local , f -> Global
+      float w,z;
       bool bObstacle;
       bool bVisited;
   };
 
   /*msg df*/
   nav_msgs::OccupancyGridConstPtr my_map;
+  a_star::isReached my_reached; 
 
   /*vars*/
   int Map[100][100] = {};
@@ -293,8 +294,8 @@ w
             }  
         } 
     }
-
-    print(PRINT_ALL_DESTINATION);
+    /*print all destinations*/
+    //print(PRINT_ALL_DESTINATION);
     ROS_INFO("Finish Map Update");
   }
 
@@ -350,6 +351,7 @@ w
 
   bool InitNodes(size_t start_place)
   {
+      printf("Enter InitNodes");
        /*Init All Nodes*/
       nodes = new Node[(XMAX+1)*(YMAX+1)];  //build all nodes for eMap
       /*Init nodes val*/
@@ -401,8 +403,22 @@ w
       return updateNodeEnd();
   }
 
-  bool Solve_AStar(size_t start_place)
+  void Direction_Handler(Node* _current)
   {
+      int x = _current->self.x;
+      int y = _current->self.y;
+      int p_x = _current->parent->self.x;
+      int p_y = _current->parent->self.y;
+
+      float theta = atan2((float)x-p_x,(float)y-p_y);
+      _current->parent->w = cos(theta/2);
+      _current->parent->z = sin(theta/2);
+  }
+
+  bool Solve_AStar(Node* start_node)
+  {
+      size_t start_place = (start_node->self.y)*(XMAX+1)+start_node->self.x;
+      printf("start place:%lu\n",start_place);
       bool ret = InitNodes(start_place);
       if(ret)
       {
@@ -466,6 +482,7 @@ w
             
             while(nodeCurrent->parent != nullptr)
             {
+                Direction_Handler(nodeCurrent);
                 AStar_Path.push_front(nodeCurrent);
                 nodeCurrent = nodeCurrent->parent;
             }
@@ -475,14 +492,16 @@ w
       }
       return ret;
   }
-  
+
   int main(int argc, char** argv)
   {
       ros::init(argc,argv,"A_star_Sim");
       ros::NodeHandle nh;
       /*get topic once*/
-      my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));     
+      my_map = ros::topic::waitForMessage<nav_msgs::OccupancyGrid>("/map",nh,ros::Duration(5));
+
       ros::Publisher goal_pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",1000);
+
       ros::Rate rate(LOOP_RATE);
       sleep(1);
 
@@ -491,27 +510,55 @@ w
       {
         InitDestination();
         EnlargeMap();
-        Solve_AStar(CENTER);
-
+        printf("Enter");
+        bool navigationState = 0;   /*in navigation*/
         while(ros::ok())
         {
-            if(!AStar_Path.empty())
+            if(!navigationState)
             {
-                true_Coordinate f;
-                Node* next = AStar_Path.front();
-                f.x = (float)(next->self.x+1)/XMAP_SIZE + X_SHIFT;
-                f.y = (float)(next->self.y+1)/YMAP_SIZE + Y_SHIFT;
-                geometry_msgs::PoseStamped my_robot_goal;
-                my_robot_goal.pose.position.x = f.x;
-                my_robot_goal.pose.position.y = f.y;
-                my_robot_goal.pose.orientation.w = 1.0;
-                my_robot_goal.pose.orientation.z = 0.0;
-                goal_pub.publish(my_robot_goal);
-                printf("%d,%d\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y);
-                AStar_Path.pop_front();
+            /*update A Star*/
+                /*first in*/
+                if(nodeStart == nullptr)
+                    nodeEnd = &nodes[YMAX/2*(XMAX+1)+XMAX/2];
+                bool ret = Solve_AStar(nodeEnd);
+                /*No more Destination*/
+                if(!ret)
+                    break;
+                /*go to nav state*/
+                else
+                    navigationState = true;
             }
-            ros::spinOnce();
-            ros::Duration(2.0).sleep();
+            else
+            {
+                /*update topic*/
+                if(sleep(2))
+                {
+                    /*check remain element is Destination or not*/
+                    if(AStar_Path.front() == nodeEnd)
+                    {
+                        /*update navigationState and add nodeEnd's w, z*/
+                        navigationState = false;
+                        AStar_Path.front()->w = AStar_Path.front()->parent->w;
+                        AStar_Path.front()->z = AStar_Path.front()->parent->z;
+                    }
+                    /*pub next*/
+                    true_Coordinate f;
+                    geometry_msgs::PoseStamped my_robot_goal;
+                    Node* nodeNext = AStar_Path.front();
+                    f.x = (float)(nodeNext->self.x+1)/XMAP_SIZE + X_SHIFT;
+                    f.y = (float)(nodeNext->self.y+1)/YMAP_SIZE + Y_SHIFT;
+                    my_robot_goal.pose.position.x = f.x;
+                    my_robot_goal.pose.position.y = f.y;
+                    my_robot_goal.pose.orientation.w = nodeNext->w;
+                    my_robot_goal.pose.orientation.z = nodeNext->z;
+
+                    goal_pub.publish(my_robot_goal);
+                    printf("%d,%d\n",AStar_Path.front()->self.x,AStar_Path.front()->self.y);
+                    AStar_Path.pop_front();
+                }
+                  
+            }
+            ros::spinOnce();      
         }
       }
       else

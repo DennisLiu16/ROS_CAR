@@ -7,7 +7,7 @@
       },
       "includePath": [
         "/opt/ros/melodic/include/**",
-        "/home/dennis/ROS/ROS_CAR/src/turtle_square/include/**",
+        "/home/dennis/ROS/ROS_CAR/devel/include/**",
         "/usr/include/**"
       ],
       "name": "ROS"

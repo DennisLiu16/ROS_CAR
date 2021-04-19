@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(a_star_EXPORTED_TARGETS "")
+set(a_star_EXPORTED_TARGETS "a_star_generate_messages_cpp;a_star_generate_messages_eus;a_star_generate_messages_lisp;a_star_generate_messages_nodejs;a_star_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${a_star_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${a_star_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "roscpp;std_msgs")
+set(depends "roscpp;std_msgs;message_runtime")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   list(APPEND a_star_EXPORTED_TARGETS ${${a_star_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "a_star-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${a_star_DIR}/${extra})
