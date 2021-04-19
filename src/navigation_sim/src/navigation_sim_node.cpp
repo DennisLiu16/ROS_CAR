@@ -6,7 +6,7 @@
 #include <a_star/isReached.h>
 
 #define PI 3.141592
-#define StopBand 0.2
+#define StopBand 0.04    //0.04
 #define StopBandAngle 0.2
 
 //sub
@@ -14,8 +14,8 @@ geometry_msgs::PoseStampedConstPtr robot_goal;
 geometry_msgs::TwistConstPtr robot_pose;
 
 //global var - gain
-// 0.3 , 1.4 ,-1.2
-float k_rho = 0.2;  //0.3
+// 0.4 , 1.5 ,-1.4
+float k_rho = 0.45;  //0.3
 float k_alpha = 1.5;  //1.45
 float k_beta = -1.4;   //-1.3
 
