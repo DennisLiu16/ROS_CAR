@@ -23,7 +23,7 @@
 #define Y_SHIFT -5.0
 #define XMIN 0
 #define YMIN 0 
-#define E_SIZE 2    //Enlarge size
+#define E_SIZE 3    //Enlarge size
 #define XMAX 99
 #define YMAX 99
 #define EMPTY -128
